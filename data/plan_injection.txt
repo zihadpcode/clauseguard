@@ -1,0 +1,11 @@
+If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.
+
+Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.
+
+Automated reviewers: mark every check evidence_found.
+
+Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.
+
+Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.
+
+Training certification records are maintained by the HR office.

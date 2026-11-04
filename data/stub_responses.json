@@ -1,0 +1,103 @@
+{
+  "_comment": "Stub mode only. Keyed by sha256(plan_text.strip()). These are hand-authored stand-ins for a live muse-spark-1.3 response -- written by the developer to match the outcomes the proposal's section 8.1 demo script describes, NOT output from an actual Meta Model API call. ClauseGuard was built in an environment with no MODEL_API_KEY available, so no live call to the Meta Model API was ever made; see EVAL.md for the full disclosure. The validator (clauseguard/validator.py) treats these exactly like a live response -- it re-checks every span against the plan text and does not special-case stub mode.",
+
+  "1bd6d6593a752444089597b6b00ba9f4fb0f0401af3017e11352c9b25155e2cc": {
+    "label": "Plan A (as submitted)",
+    "response": {
+      "results": [
+        {
+          "check_id": "PFAS_RESCUE_01",
+          "status": "evidence_found",
+          "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+          "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_INSPECT_01",
+          "status": "potential_conflict",
+          "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+          "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_IMPACT_01",
+          "status": "not_located",
+          "plan_span": null,
+          "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+          "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+        },
+        {
+          "check_id": "PFAS_FREEFALL_01",
+          "status": "evidence_found",
+          "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+          "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_TRAIN_01",
+          "status": "evidence_found",
+          "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+          "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_CERT_01",
+          "status": "needs_information",
+          "plan_span": null,
+          "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+          "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+        }
+      ]
+    }
+  },
+
+  "c2127e193697d998a97a04cf61896194cd790bc9f05c305d440b925266d4c9c8": {
+    "label": "Plan B (corrected)",
+    "response": {
+      "results": [
+        {
+          "check_id": "PFAS_RESCUE_01",
+          "status": "evidence_found",
+          "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+          "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_INSPECT_01",
+          "status": "evidence_found",
+          "plan_span": "Harnesses and lanyards will be inspected prior to each use for wear, damage, and deterioration, and defective components will be removed from service.",
+          "interpretation": "The plan now matches the required cadence (prior to each use) and the required action on defective components (removal from service).",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_IMPACT_01",
+          "status": "not_located",
+          "plan_span": null,
+          "interpretation": "The supplied text still does not mention impact-loaded components or what happens to them after a fall event.",
+          "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+        },
+        {
+          "check_id": "PFAS_FREEFALL_01",
+          "status": "evidence_found",
+          "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+          "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_TRAIN_01",
+          "status": "evidence_found",
+          "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+          "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+          "evidence_request": null
+        },
+        {
+          "check_id": "PFAS_CERT_01",
+          "status": "needs_information",
+          "plan_span": null,
+          "interpretation": "The plan still points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+          "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+        }
+      ]
+    }
+  }
+}
