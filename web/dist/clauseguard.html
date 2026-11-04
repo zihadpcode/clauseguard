@@ -1,0 +1,729 @@
+<title>ClauseGuard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Precheck a personal fall arrest plan against six 29 CFR 1926.502/503 requirements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Inspection sheet: steel-grey ground, white work surfaces, status shown as
+   equipment tags (ANSI Z535 / OSHA 1910.145 colors: danger red, caution
+   yellow, safety green), one hi-vis barrier stripe under the masthead. */
+:root {
+  --ground: #eef1f4; --surface: #ffffff; --surface-2: #f5f7f9; --ink: #121a22; --ink-2: #3b4753;
+  --muted: #66727e; --line: #d9dfe5; --line-2: #c3ccd5;
+  --accent: #d9480f; --accent-ink: #ffffff; --accent-soft: #fff0e6; --accent-line: #ffc8a8;
+  --band: #121a22; --band-ink: #f2f5f8; --band-muted: #93a1ae;
+  --danger: #c92a2a; --danger-ink: #ffffff; --danger-soft: #fff1f1; --danger-line: #ffc9c9;
+  --caution: #fcc419; --caution-ink: #2b2100; --caution-soft: #fff9db; --caution-line: #ffe066;
+  --safe: #2b8a3e; --safe-ink: #ffffff; --safe-soft: #ebfbee; --safe-line: #b2f2bb;
+  --neutral: #5f6b76; --neutral-ink: #ffffff; --neutral-soft: #f1f3f5; --neutral-line: #ced4da;
+  --hl-danger: #ffe0e0; --hl-safe: #d8f5df;
+  --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0d1217; --surface: #151c23; --surface-2: #1b242c; --ink: #e8eef3; --ink-2: #c1cbd4;
+    --muted: #8a97a3; --line: #26313b; --line-2: #34414c;
+    --accent: #ff7a33; --accent-ink: #1a0b02; --accent-soft: #2a1a10; --accent-line: #5a3418;
+    --band: #070b0f; --band-ink: #f2f5f8; --band-muted: #8a97a3;
+    --danger: #ff6b6b; --danger-ink: #1e0606; --danger-soft: #2a1416; --danger-line: #5c2327;
+    --caution: #ffd43b; --caution-ink: #231b00; --caution-soft: #29230d; --caution-line: #5c4a12;
+    --safe: #51cf66; --safe-ink: #04170a; --safe-soft: #11241a; --safe-line: #1f4d2c;
+    --neutral: #9aa5b0; --neutral-ink: #0d1217; --neutral-soft: #1b242c; --neutral-line: #34414c;
+    --hl-danger: #4a1d20; --hl-safe: #173a24;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0d1217; --surface: #151c23; --surface-2: #1b242c; --ink: #e8eef3; --ink-2: #c1cbd4;
+  --muted: #8a97a3; --line: #26313b; --line-2: #34414c;
+  --accent: #ff7a33; --accent-ink: #1a0b02; --accent-soft: #2a1a10; --accent-line: #5a3418;
+  --band: #070b0f; --band-ink: #f2f5f8; --band-muted: #8a97a3;
+  --danger: #ff6b6b; --danger-ink: #1e0606; --danger-soft: #2a1416; --danger-line: #5c2327;
+  --caution: #ffd43b; --caution-ink: #231b00; --caution-soft: #29230d; --caution-line: #5c4a12;
+  --safe: #51cf66; --safe-ink: #04170a; --safe-soft: #11241a; --safe-line: #1f4d2c;
+  --neutral: #9aa5b0; --neutral-ink: #0d1217; --neutral-soft: #1b242c; --neutral-line: #34414c;
+  --hl-danger: #4a1d20; --hl-safe: #173a24;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--ground); color: var(--ink); font: 15px/1.55 var(--font-body); }
+.wrap { max-width: 1200px; margin: 0 auto; padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; color: var(--ink); }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+a { color: inherit; }
+.mono { font-family: var(--font-mono); }
+
+.mast { background: var(--band); color: var(--band-ink); border-radius: 10px 10px 0 0; padding: 14px 18px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.stripe { height: 7px; border-radius: 0 0 10px 10px; margin-bottom: 18px;
+  background: repeating-linear-gradient(-45deg, var(--accent) 0 12px, var(--band) 12px 24px); }
+.mark { width: 34px; height: 38px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center;
+  clip-path: polygon(50% 0, 100% 15%, 100% 55%, 50% 100%, 0 55%, 0 15%); font-weight: 800; flex: none; }
+.mast h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.01em; color: var(--band-ink); }
+.mast p { margin: 1px 0 0; color: var(--band-muted); font-size: .84rem; }
+.mode { margin-left: auto; font: 500 .74rem/1 var(--font-mono); padding: 8px 11px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.2); white-space: nowrap; }
+.mode i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--caution); margin-right: 7px; vertical-align: 1px; }
+
+.steps { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 16px; padding: 0; list-style: none; }
+.steps li { display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; font-size: .84rem;
+  font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); }
+.steps b { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem;
+  background: var(--surface-2); color: var(--muted); font-family: var(--font-mono); }
+.steps .on { color: var(--ink); border-color: var(--ink); }
+.steps .on b { background: var(--ink); color: var(--surface); }
+.steps .done b { background: var(--safe); color: var(--safe-ink); }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px 22px; }
+.eyebrow { font: 600 .7rem/1.3 var(--font-body); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.cite { font: 500 .74rem var(--font-mono); text-transform: none; letter-spacing: 0; color: var(--ink-2); }
+.lede { color: var(--ink-2); max-width: 65ch; margin: 8px 0 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: .78rem; padding: 3px 9px; border-radius: 4px; background: var(--surface-2); color: var(--muted);
+  border: 1px solid var(--line); text-decoration: line-through; text-decoration-color: var(--line-2); }
+
+.btn { border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 10px 16px;
+  font-weight: 600; cursor: pointer; transition: background .15s, border-color .15s; }
+.btn:hover { border-color: var(--ink-2); }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn--primary:hover { filter: brightness(1.06); border-color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+.btn--block { width: 100%; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.gate { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.gate .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+@media (max-width: 880px) { .gate { grid-template-columns: minmax(0, 1fr); } }
+
+.work { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; align-items: start; }
+@media (max-width: 880px) { .work { grid-template-columns: minmax(0, 1fr); } }
+label.field { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 6px; }
+textarea#plan { width: 100%; min-height: 280px; resize: vertical; border: 1px solid var(--line-2); border-radius: 8px;
+  background: var(--surface); padding: 12px 14px; line-height: 1.65; font-size: .92rem; }
+.drop { margin-top: 12px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border: 1.5px dashed var(--line-2);
+  border-radius: 8px; padding: 12px 14px; background: var(--surface); font-size: .86rem; color: var(--muted); }
+.drop input { font-size: .84rem; max-width: 100%; }
+.demo { margin-top: 14px; }
+.demo p { margin: 0 0 8px; font-size: .82rem; color: var(--muted); }
+.note { font-size: .82rem; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+.err { margin-top: 10px; color: var(--danger); font-size: .86rem; font-weight: 600; }
+
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.stat { background: var(--surface-2); border-radius: 6px; padding: 10px 12px; }
+.stat b { display: block; font: 700 1.45rem/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.stat span { font-size: .76rem; color: var(--muted); }
+.kv { font: .74rem/1.75 var(--font-mono); color: var(--muted); overflow-wrap: anywhere; }
+.kv b { color: var(--ink-2); font-weight: 500; }
+.state { margin: 12px 0; padding: 8px 10px; border-radius: 6px; font-size: .84rem; font-weight: 600; }
+.state--ok { background: var(--safe-soft); color: var(--safe); }
+.state--bad { background: var(--caution-soft); color: var(--ink); border: 1px solid var(--caution-line); }
+.side { display: grid; gap: 10px; }
+
+.results { margin-top: 22px; display: grid; gap: 14px; }
+.banner { display: flex; gap: 14px; align-items: flex-start; border-radius: 8px; padding: 14px 16px; border: 1px solid; }
+.banner .ico { width: 30px; height: 30px; border-radius: 6px; display: grid; place-items: center; flex: none; font-weight: 800; }
+.banner h2 { font-size: 1.02rem; font-weight: 800; letter-spacing: .01em; }
+.banner p { margin: 3px 0 0; font-size: .9rem; }
+.banner ul { margin: 6px 0 0 18px; padding: 0; font-size: .85rem; }
+.banner--incomplete { background: var(--danger-soft); border-color: var(--danger-line); }
+.banner--incomplete .ico { background: var(--danger); color: var(--danger-ink); }
+.banner--incomplete h2 { color: var(--danger); }
+.banner--open { background: var(--caution-soft); border-color: var(--caution-line); }
+.banner--open .ico { background: var(--caution); color: var(--caution-ink); }
+.banner--clean { background: var(--safe-soft); border-color: var(--safe-line); }
+.banner--clean .ico { background: var(--safe); color: var(--safe-ink); }
+.stale { background: var(--caution-soft); border: 1px solid var(--caution-line); border-radius: 8px; padding: 12px 16px;
+  font-weight: 600; font-size: .9rem; margin-top: 22px; }
+
+.tally { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.tally div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: flex;
+  align-items: baseline; gap: 10px; }
+.tally b { font: 800 1.6rem/1 var(--font-display); font-variant-numeric: tabular-nums; }
+@media (max-width: 720px) { .tally { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.stamp { font: .72rem/1.8 var(--font-mono); color: var(--muted); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 2px 16px; overflow-wrap: anywhere; }
+.stamp b { color: var(--ink-2); font-weight: 500; }
+
+.tag { display: inline-flex; align-items: center; position: relative; font: 700 .72rem/1 var(--font-body); letter-spacing: .04em;
+  text-transform: uppercase; padding: 6px 10px 6px 21px; border-radius: 0 4px 4px 0; white-space: nowrap;
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%); }
+.tag::before { content: ""; position: absolute; left: 9px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%;
+  background: var(--surface); }
+.tag--potential_conflict { background: var(--danger); color: var(--danger-ink); }
+.tag--needs_information { background: var(--caution); color: var(--caution-ink); }
+.tag--evidence_found { background: var(--safe); color: var(--safe-ink); }
+.tag--not_located { background: var(--neutral); color: var(--neutral-ink); }
+.tag--invalid { background: var(--ink); color: var(--surface); }
+
+.split { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 16px; align-items: start; }
+@media (max-width: 880px) { .split { grid-template-columns: minmax(0, 1fr); } }
+.cards { display: grid; gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px 12px; }
+.card--invalid { border-color: var(--danger-line); box-shadow: 0 0 0 1px var(--danger-line); }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cid { font: 500 .74rem/1 var(--font-mono); color: var(--muted); }
+.card h3 { font: 600 1rem/1.4 var(--font-body); margin: 8px 0 12px; }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+@media (max-width: 640px) { .pair { grid-template-columns: minmax(0, 1fr); } }
+.box { border-radius: 6px; padding: 11px 13px; font-size: .88rem; line-height: 1.55; min-width: 0; }
+.box p { margin: 0; }
+.box--reg { background: var(--surface-2); color: var(--ink-2); }
+.box--potential_conflict { background: var(--danger-soft); border: 1px solid var(--danger-line); }
+.box--evidence_found { background: var(--safe-soft); border: 1px solid var(--safe-line); }
+.box--needs_information { background: var(--caution-soft); border: 1px solid var(--caution-line); }
+.box--not_located { background: var(--neutral-soft); border: 1px dashed var(--neutral-line); }
+.q::before { content: "\201C"; } .q::after { content: "\201D"; }
+.src { font: .7rem/1.6 var(--font-mono); color: var(--muted); margin-top: 8px; overflow-wrap: anywhere; }
+.nw { white-space: nowrap; }
+.interp { margin: 10px 0 0; font-size: .88rem; color: var(--ink-2); }
+.interp b { color: var(--ink); }
+.fail { margin-top: 8px; background: var(--danger-soft); color: var(--danger); border: 1px solid var(--danger-line); border-radius: 6px;
+  padding: 7px 10px; font-size: .84rem; font-weight: 600; }
+.card-foot { margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--line); font-size: .74rem; color: var(--muted);
+  display: flex; justify-content: space-between; gap: 6px 12px; flex-wrap: wrap; }
+.card-foot--bad { color: var(--danger); font-weight: 600; }
+
+.planview { position: sticky; top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+.planview pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; font: .87rem/1.8 var(--font-body); color: var(--ink-2); }
+.hl { color: var(--ink); border-radius: 3px; padding: 1px 2px; }
+.hl--potential_conflict { background: var(--hl-danger); box-shadow: inset 0 -2px 0 var(--danger); }
+.hl--evidence_found { background: var(--hl-safe); box-shadow: inset 0 -2px 0 var(--safe); }
+.hl sup { font: 600 .6rem/1 var(--font-mono); margin-left: 3px; color: var(--muted); }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .75rem; color: var(--muted); margin-top: 12px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+details.raw { margin-top: 12px; font-size: .82rem; }
+details.raw summary { cursor: pointer; color: var(--muted); font-weight: 600; }
+details.raw pre { max-height: 320px; overflow: auto; background: var(--surface-2); border-radius: 6px; padding: 10px;
+  font: .72rem/1.5 var(--font-mono); white-space: pre; }
+
+.foot { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--line); font-size: .78rem; color: var(--muted);
+  display: flex; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+<div class="wrap">
+  <header>
+    <div class="mast">
+      <div class="mark" aria-hidden="true">&#10003;</div>
+      <div><h1>ClauseGuard</h1><p>Fall arrest plan precheck &middot; 29 CFR 1926.502 &amp; 1926.503</p></div>
+      <div class="mode"><i></i>Hosted demo &middot; stub mode</div>
+    </div>
+    <div class="stripe" aria-hidden="true"></div>
+  </header>
+  <ol class="steps" id="steps" aria-label="Progress"></ol>
+  <main id="view"></main>
+  <footer class="foot"><span id="disclaimer"></span><span>No accuracy figure is claimed. No safety professional has reviewed this output.</span></footer>
+</div>
+<script type="application/json" id="cg-data">{"checks": [{"check_id": "PFAS_RESCUE_01", "question": "Does the plan provide for prompt rescue, or assure employees can rescue themselves?", "cfr_paragraph": "29 CFR 1926.502(d)(20)", "ecfr_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-M/section-1926.502", "kind": "conduct", "verbatim_text": "The employer shall provide for prompt rescue of employees in the event of a fall or shall assure that employees are able to rescue themselves.", "retrieval_date": "2026-11-04", "sha256": "70c29c92265e527adc2a4daf2d56b077f9186826fffca4639039209f0ed34a07", "verified_against_live_ecfr_by_human": false}, {"check_id": "PFAS_INSPECT_01", "question": "Does the plan require PFAS inspection prior to each use, with defective components removed from service?", "cfr_paragraph": "29 CFR 1926.502(d)(21)", "ecfr_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-M/section-1926.502", "kind": "conduct", "verbatim_text": "Personal fall arrest systems shall be inspected prior to each use for wear, damage, and other deterioration, and defective components shall be removed from service.", "retrieval_date": "2026-11-04", "sha256": "4bc87ec5b3ae598a9cd6958ab1e73fecd0b7bad34c1b9d2e07a112958b8e966e", "verified_against_live_ecfr_by_human": false}, {"check_id": "PFAS_IMPACT_01", "question": "Does the plan remove impact loaded components from service until a competent person clears them?", "cfr_paragraph": "29 CFR 1926.502(d)(19)", "ecfr_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-M/section-1926.502", "kind": "conduct", "verbatim_text": "Personal fall arrest systems and components subjected to impact loading shall be immediately removed from service and shall not be used again for employee protection until inspected and determined by a competent person to be undamaged and suitable for reuse.", "retrieval_date": "2026-11-04", "sha256": "7674b559725e429c8e646df65cddd1763b439a685878fe3b469d1e023ca93fb1", "verified_against_live_ecfr_by_human": false}, {"check_id": "PFAS_FREEFALL_01", "question": "Does the plan state the free fall and deceleration limits?", "cfr_paragraph": "29 CFR 1926.502(d)(16)(iii)-(iv)", "ecfr_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-M/section-1926.502", "kind": "conduct", "verbatim_text": "Personal fall arrest systems, when stopping a fall, shall: ... (iii) be rigged such that an employee can neither free fall more than 6 feet (1.8 m), nor contact any lower level; [and] (iv) bring an employee to a complete stop and limit maximum deceleration distance an employee travels to 3.5 feet (1.07 m).", "retrieval_date": "2026-11-04", "sha256": "ac582e123cc53b14e7e206191bb203dc8d2faca49f14be1de742797c84f4f7c2", "verified_against_live_ecfr_by_human": false}, {"check_id": "PFAS_TRAIN_01", "question": "Does the plan provide a training program for employees exposed to fall hazards?", "cfr_paragraph": "29 CFR 1926.503(a)(1)", "ecfr_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-M/section-1926.503", "kind": "conduct", "verbatim_text": "The employer shall provide a training program for each employee who might be exposed to fall hazards. The program shall enable each employee to recognize the hazards of falling and shall train each employee in the procedures to be followed in order to minimize these hazards.", "retrieval_date": "2026-11-04", "sha256": "16f620c5a2d6e7be4e5d99e83bb1ab98032a67ffd8607864b8a26c0224fabcf1", "verified_against_live_ecfr_by_human": false}, {"check_id": "PFAS_CERT_01", "question": "Does the plan address the written training certification record?", "cfr_paragraph": "29 CFR 1926.503(b)(1)", "ecfr_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-M/section-1926.503", "kind": "documentation", "verbatim_text": "The employer shall verify compliance with paragraph (a) of this section by preparing a written certification record. The written certification record shall contain the name or other identity of the employee trained, the date(s) of the training, and the signature of the person who conducted the training or the signature of the employer.", "retrieval_date": "2026-11-04", "sha256": "5fd44af6a3e540f2a1c850ae4b9a10a056948263a16f47e3331e64283ddd83c8", "verified_against_live_ecfr_by_human": false}], "stubs": {"1bd6d6593a752444089597b6b00ba9f4fb0f0401af3017e11352c9b25155e2cc": {"label": "Plan A (as submitted)", "response": {"results": [{"check_id": "PFAS_RESCUE_01", "status": "evidence_found", "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.", "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.", "evidence_request": null}, {"check_id": "PFAS_INSPECT_01", "status": "potential_conflict", "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.", "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.", "evidence_request": null}, {"check_id": "PFAS_IMPACT_01", "status": "not_located", "plan_span": null, "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.", "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."}, {"check_id": "PFAS_FREEFALL_01", "status": "evidence_found", "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.", "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.", "evidence_request": null}, {"check_id": "PFAS_TRAIN_01", "status": "evidence_found", "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.", "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.", "evidence_request": null}, {"check_id": "PFAS_CERT_01", "status": "needs_information", "plan_span": null, "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.", "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."}]}}, "c2127e193697d998a97a04cf61896194cd790bc9f05c305d440b925266d4c9c8": {"label": "Plan B (corrected)", "response": {"results": [{"check_id": "PFAS_RESCUE_01", "status": "evidence_found", "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.", "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.", "evidence_request": null}, {"check_id": "PFAS_INSPECT_01", "status": "evidence_found", "plan_span": "Harnesses and lanyards will be inspected prior to each use for wear, damage, and deterioration, and defective components will be removed from service.", "interpretation": "The plan now matches the required cadence (prior to each use) and the required action on defective components (removal from service).", "evidence_request": null}, {"check_id": "PFAS_IMPACT_01", "status": "not_located", "plan_span": null, "interpretation": "The supplied text still does not mention impact-loaded components or what happens to them after a fall event.", "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."}, {"check_id": "PFAS_FREEFALL_01", "status": "evidence_found", "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.", "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.", "evidence_request": null}, {"check_id": "PFAS_TRAIN_01", "status": "evidence_found", "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.", "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.", "evidence_request": null}, {"check_id": "PFAS_CERT_01", "status": "needs_information", "plan_span": null, "interpretation": "The plan still points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.", "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."}]}}}, "plans": {"a": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.", "b": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected prior to each use for wear, damage, and deterioration, and defective components will be removed from service.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.", "a_hash": "1bd6d6593a752444089597b6b00ba9f4fb0f0401af3017e11352c9b25155e2cc"}}</script>
+<script>
+// Port of clauseguard/validator.py + normalize.py. Held to the Python
+// validator's exact outputs by tests/js/validator.test.mjs (shared vectors).
+(function (root) {
+  "use strict";
+
+  const EXPECTED_STATUSES = ["potential_conflict", "evidence_found", "needs_information", "not_located"];
+  const SPAN_STATUSES = ["potential_conflict", "evidence_found"];
+  const EVIDENCE_REQUEST_STATUSES = ["needs_information", "not_located"];
+  const MIN_SPAN_LENGTH = 20;
+
+  const QUOTE_MAP = {
+    "\u2018": "'", "\u2019": "'", "\u201a": "'", "\u201b": "'", "\u2032": "'", "\u02bc": "'",
+    "\u201c": '"', "\u201d": '"', "\u201e": '"', "\u201f": '"', "\u2033": '"',
+  };
+
+  // Python's str.split() whitespace set (adds \x1c-\x1f, excludes \ufeff).
+  const PY_WS = /[\t\n\v\f\r\x1c-\x1f \x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/;
+  const PY_STRIP = /^[\t\n\v\f\r\x1c-\x1f \x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\t\n\v\f\r\x1c-\x1f \x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/g;
+
+  const pyLen = (s) => Array.from(s).length;
+  const pyStrip = (s) => s.replace(PY_STRIP, "");
+  const pyStr = (v) => (v === null || v === undefined ? "None" : String(v));
+  const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+
+  function normalize(text) {
+    text = text.normalize("NFKC");
+    for (const [curly, straight] of Object.entries(QUOTE_MAP)) text = text.split(curly).join(straight);
+    text = text.split(PY_WS).filter(Boolean).join(" ");
+    text = text.toLowerCase();
+    if (text.endsWith(".")) text = text.slice(0, -1);
+    return text;
+  }
+
+  function validate(response, planText, expectedCheckIds) {
+    const expected = new Set(expectedCheckIds);
+    const globalErrors = [];
+    const cards = [];
+
+    const results = isObj(response) ? response.results : undefined;
+    if (!Array.isArray(results)) {
+      globalErrors.push("Response has no 'results' array.");
+      return finish(cards, globalErrors);
+    }
+    if (results.length !== expected.size) {
+      globalErrors.push(`Expected ${expected.size} results, got ${results.length}.`);
+    }
+
+    const seen = [];
+    for (const raw of results) {
+      const errors = [];
+      if (!isObj(raw)) errors.push("Result is not an object.");
+      const field = (name) => {
+        const v = isObj(raw) && name in raw ? raw[name] : null;
+        if (v !== null && typeof v !== "string") {
+          errors.push(`${name} must be a string or null.`);
+          return null;
+        }
+        return v;
+      };
+      const card = {
+        check_id: field("check_id"),
+        status: field("status"),
+        plan_span: field("plan_span"),
+        interpretation: field("interpretation"),
+        evidence_request: field("evidence_request"),
+        errors,
+      };
+      const { check_id: checkId, status, plan_span: span } = card;
+
+      if (seen.includes(checkId)) errors.push(`Duplicate check_id '${pyStr(checkId)}'.`);
+      seen.push(checkId);
+      if (!expected.has(checkId)) errors.push(`Unknown check_id '${pyStr(checkId)}'.`);
+
+      if (!EXPECTED_STATUSES.includes(status)) {
+        errors.push(`Status '${pyStr(status)}' is not one of the four allowed values.`);
+        cards.push(card);
+        continue;
+      }
+      if (SPAN_STATUSES.includes(status)) {
+        if (!span || pyLen(span) < MIN_SPAN_LENGTH) {
+          errors.push(`Status '${status}' requires plan_span of at least ${MIN_SPAN_LENGTH} characters.`);
+        } else if (!normalize(planText).includes(normalize(span))) {
+          errors.push("plan_span does not occur in the plan text after normalization (possible fabricated quote).");
+        }
+      }
+      if (EVIDENCE_REQUEST_STATUSES.includes(status)) {
+        if (!card.evidence_request || !pyStrip(card.evidence_request)) {
+          errors.push(`Status '${status}' requires a non-empty evidence_request.`);
+        }
+      }
+      if (!card.interpretation || !pyStrip(card.interpretation)) errors.push("interpretation is empty.");
+      cards.push(card);
+    }
+
+    const missing = [...expected].filter((id) => !seen.includes(id)).sort();
+    for (const id of missing) globalErrors.push(`Missing required check_id '${id}'.`);
+    return finish(cards, globalErrors);
+  }
+
+  function finish(cards, globalErrors) {
+    const validCount = cards.filter((c) => c.errors.length === 0).length;
+    return {
+      cards,
+      global_errors: globalErrors,
+      valid_count: validCount,
+      all_valid: globalErrors.length === 0 && validCount === cards.length,
+    };
+  }
+
+  const api = { normalize, validate, pyStrip, pyLen, MIN_SPAN_LENGTH };
+  root.CGValidator = api;
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+</script>
+<script>
+// Port of clauseguard/highlight.py: marks validated spans in the plan text.
+// Display only; a span this can't place is just not highlighted.
+(function (root) {
+  "use strict";
+
+  const SINGLE = "'\u2018\u2019\u201a\u201b\u2032\u02bc";
+  const DOUBLE = '"\u201c\u201d\u201e\u201f\u2033';
+  const RE_SYNTAX = /[.*+?^${}()|[\]\\/]/g;
+
+  const esc = (s) =>
+    String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" })[c]);
+
+  function spanPattern(span) {
+    span = span.trim();
+    if (span.endsWith(".")) span = span.slice(0, -1);
+    const parts = [];
+    for (const ch of span) {
+      if (/\s/u.test(ch)) {
+        if (parts[parts.length - 1] !== "\\s+") parts.push("\\s+");
+      } else if (SINGLE.includes(ch)) {
+        parts.push(`[${SINGLE}]`);
+      } else if (DOUBLE.includes(ch)) {
+        parts.push(`[${DOUBLE}]`);
+      } else {
+        parts.push(ch.replace(RE_SYNTAX, "\\$&"));
+      }
+    }
+    return new RegExp(parts.join("") + "\\.?", "iu");
+  }
+
+  function findSpans(planText, spans) {
+    const found = [];
+    for (const [checkId, status, span] of spans) {
+      if (!span) continue;
+      const m = spanPattern(span).exec(planText);
+      if (m) found.push([m.index, m.index + m[0].length, checkId, status]);
+    }
+    found.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const out = [];
+    let lastEnd = -1;
+    for (const f of found) {
+      if (f[0] >= lastEnd) {
+        out.push(f);
+        lastEnd = f[1];
+      }
+    }
+    return out;
+  }
+
+  function highlightHtml(planText, spans) {
+    let html = "";
+    let pos = 0;
+    for (const [start, end, checkId, status] of findSpans(planText, spans)) {
+      const short = checkId.replace(/^PFAS_/, "").replace(/_01$/, "");
+      html += esc(planText.slice(pos, start));
+      html += `<mark class="hl hl--${esc(status)}" title="${esc(checkId)}">${esc(planText.slice(start, end))}<sup>${esc(short)}</sup></mark>`;
+      pos = end;
+    }
+    return html + esc(planText.slice(pos));
+  }
+
+  const api = { findSpans, highlightHtml, esc };
+  root.CGHighlight = api;
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+})(typeof globalThis !== "undefined" ? globalThis : this);
+
+</script>
+<script>
+// ClauseGuard hosted page: scenario gate -> plan text -> review. Stub mode:
+// validates and renders the recorded responses for the two development plans.
+(function () {
+  "use strict";
+  const { validate, pyStrip, pyLen } = window.CGValidator;
+  const { highlightHtml, esc } = window.CGHighlight;
+  const DATA = JSON.parse(document.getElementById("cg-data").textContent);
+  const CHECKS = DATA.checks;
+  const IDS = CHECKS.map((c) => c.check_id);
+  const MIN_PLAN_CHARS = 40;
+  const MAX_UPLOAD = 5 * 1024 * 1024;
+  const MODEL_LABEL = "muse-spark-1.3 (STUBBED -- recorded JSON, not a live call)";
+  const DISCLAIMER = "Not legal advice, not a compliance determination, not a substitute for a qualified safety professional.";
+  const CARD_DISCLAIMER = "Not legal advice or a compliance determination.";
+  const STATUS = {
+    potential_conflict: "Potential conflict",
+    evidence_found: "Evidence found",
+    needs_information: "Needs information",
+    not_located: "Not located",
+  };
+  const OPEN = { potential_conflict: "potential conflict", not_located: "not located", needs_information: "needs information" };
+
+  const S = { step: "scenario", text: "", source: "pasted", hash: null, run: null, stale: false, error: null, uploadError: null };
+  const $ = (sel) => document.querySelector(sel);
+  const view = $("#view");
+
+  const lineCount = (s) => (s ? s.split(/\r\n|[\n\r\v\f\x1c\x1d\x1e\x85\u2028\u2029]/).length : 0);
+
+  async function sha256(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  // ---------- chrome ----------
+  function renderSteps() {
+    const cur = S.step === "plan" ? (S.run ? 3 : 2) : 1;
+    $("#steps").innerHTML = ["Confirm scenario", "Plan text", "Review"]
+      .map((label, i) => {
+        const n = i + 1;
+        const cls = n === cur ? "on" : n < cur ? "done" : "";
+        return `<li class="${cls}" ${n === cur ? 'aria-current="step"' : ""}><b>${n < cur ? "&#10003;" : n}</b>${label}</li>`;
+      })
+      .join("");
+  }
+
+  // ---------- step 1 ----------
+  function exampleCard() {
+    const check = CHECKS.find((c) => c.check_id === "PFAS_INSPECT_01");
+    const card = DATA.stubs[DATA.plans.a_hash].response.results.find((r) => r.check_id === "PFAS_INSPECT_01");
+    return `<div class="panel"><p class="eyebrow">What a review looks like &middot; Plan A, development example</p>
+      ${cardHtml(check, { ...card, errors: [] }, 0, 0)}</div>`;
+  }
+
+  function renderScenario() {
+    const excluded = ["Guardrails", "Safety nets", "Covers", "Roofing alternatives", "\u00a7 1926.502(k) fall protection plan"];
+    const unsupported = S.step === "unsupported";
+    view.innerHTML = `<div class="gate">
+      <section class="panel" aria-labelledby="gate-h">
+        <p class="eyebrow">Step 1 &middot; Applicability</p>
+        <h2 id="gate-h" style="font-size:1.35rem">Does this plan use conventional personal fall arrest?</h2>
+        <p class="lede">ClauseGuard supports one scenario: work protected by a <b>conventional personal fall arrest system</b>
+          (body harness, connector, anchorage) on a construction site. All six checks apply by construction. Anything else
+          stops here instead of producing a review that doesn't fit.</p>
+        <p class="eyebrow" style="margin-top:16px">Not supported</p>
+        <div class="chips">${excluded.map((x) => `<span class="chip">${esc(x)}</span>`).join("")}</div>
+        ${unsupported ? `<div class="banner banner--incomplete" style="margin-top:18px" role="alert"><div class="ico">!</div><div>
+            <h2>This scenario is not supported</h2><p>ClauseGuard has no applicability logic for guardrails, nets, covers,
+            roofing alternatives, or a \u00a7 1926.502(k) plan, so it stops rather than guessing.</p></div></div>
+            <div class="actions"><button class="btn" id="back">Back to scenario question</button></div>`
+          : `<div class="actions"><button class="btn btn--primary" id="yes">Yes, conventional PFAS</button>
+            <button class="btn" id="no">No, a different system</button></div>`}
+      </section>
+      ${exampleCard()}
+    </div>`;
+    if (unsupported) $("#back").onclick = () => go("scenario");
+    else {
+      $("#yes").onclick = () => go("plan");
+      $("#no").onclick = () => go("unsupported");
+    }
+  }
+
+  // ---------- step 2 ----------
+  function renderPlan() {
+    view.innerHTML = `<div class="work">
+      <section>
+        <label class="field" for="plan">Fall protection plan text</label>
+        <textarea id="plan" spellcheck="false" placeholder="Paste the PFAS section of the site-specific safety plan here."></textarea>
+        <div class="drop"><label for="file">Or upload a .txt file</label><input id="file" type="file" accept=".txt,.pdf,text/plain,application/pdf"></div>
+        <div id="upload-err"></div>
+        <div class="demo"><p>Development examples (not validation data):</p>
+          <div class="row"><button class="btn" id="demo-a">Load Plan A (as submitted)</button>
+          <button class="btn" id="demo-b">Load Plan B (corrected)</button></div></div>
+      </section>
+      <aside class="side">
+        <div class="panel" id="preview"></div>
+        <button class="btn btn--primary btn--block" id="analyze">Analyze plan</button>
+        <button class="btn btn--block" id="change">Change scenario</button>
+        <p class="note">This hosted page runs in <b>stub mode</b>: it validates and renders recorded responses for the two
+          development plans only, and refuses any other text. Live analysis with muse-spark-1.3 runs in the Streamlit app
+          when a Meta Model API key is configured.</p>
+      </aside>
+    </div><div id="results"></div>`;
+
+    const ta = $("#plan");
+    ta.value = S.text;
+    ta.addEventListener("input", () => {
+      S.source = "pasted / edited";
+      setText(ta.value, null, false);
+    });
+    $("#file").addEventListener("change", onUpload);
+    $("#demo-a").onclick = () => loadDemo("a", "demo: Plan A");
+    $("#demo-b").onclick = () => loadDemo("b", "demo: Plan B");
+    $("#analyze").onclick = analyze;
+    $("#change").onclick = () => go("scenario");
+    renderPreview();
+    renderResults();
+  }
+
+  function setText(text, source, syncTextarea = true) {
+    S.text = text;
+    if (source) S.source = source;
+    if (S.run) {
+      S.run = null;
+      S.stale = true;
+      renderSteps();
+    }
+    S.error = null;
+    if (syncTextarea && $("#plan")) $("#plan").value = text;
+    renderPreview();
+    renderResults();
+  }
+
+  function loadDemo(which, source) {
+    S.uploadError = null;
+    setText(DATA.plans[which], source);
+    $("#upload-err").innerHTML = "";
+  }
+
+  function onUpload(e) {
+    const file = e.target.files[0];
+    const errBox = $("#upload-err");
+    errBox.innerHTML = "";
+    if (!file) return;
+    const fail = (msg) => (errBox.innerHTML = `<div class="err" role="alert">${esc(msg)}</div>`);
+    const name = file.name.toLowerCase();
+    if (file.size > MAX_UPLOAD) return fail(`${file.name} is larger than 5 MB.`);
+    if (name.endsWith(".pdf")) {
+      return fail("PDF text extraction runs in the Streamlit app. On this page, paste the text or upload a .txt file.");
+    }
+    if (!name.endsWith(".txt")) return fail("Only .txt files can be uploaded here.");
+    const reader = new FileReader();
+    reader.onload = () => setText(String(reader.result).replace(/^\ufeff/, "").trim(), `upload: ${file.name}`);
+    reader.onerror = () => fail(`${file.name} could not be read.`);
+    reader.readAsText(file);
+  }
+
+  async function renderPreview() {
+    const stripped = pyStrip(S.text);
+    const chars = pyLen(stripped);
+    const ready = chars >= MIN_PLAN_CHARS;
+    const hash = stripped ? await sha256(stripped) : null;
+    if (pyStrip(S.text) !== stripped) return; // a newer keystroke owns the preview
+    S.hash = hash;
+    const box = $("#preview");
+    if (!box) return;
+    box.innerHTML = `<p class="eyebrow">Extraction preview</p>
+      <div class="stats"><div class="stat"><b>${lineCount(stripped)}</b><span>lines</span></div>
+      <div class="stat"><b>${chars.toLocaleString("en-US")}</b><span>characters</span></div></div>
+      <div class="kv"><div><b>source</b> ${esc(S.source)}</div>${hash ? `<div><b>sha256</b> ${hash.slice(0, 16)}&hellip;</div>` : ""}</div>
+      ${ready ? '<div class="state state--ok">Ready to analyze</div>'
+        : `<div class="state state--bad">INCOMPLETE &middot; paste at least ${MIN_PLAN_CHARS} characters</div>`}`;
+    $("#analyze").disabled = !ready;
+  }
+
+  // ---------- analysis ----------
+  async function analyze() {
+    const plan = pyStrip(S.text);
+    if (pyLen(plan) < MIN_PLAN_CHARS) return;
+    S.stale = false;
+    S.error = null;
+    const hash = await sha256(plan);
+    const stub = DATA.stubs[hash];
+    if (!stub) {
+      S.run = null;
+      S.error = "This hosted page runs in stub mode, which only has recorded responses for the two development plans " +
+        "(Plan A and Plan B). It does not invent an analysis for text it has not seen. Load a development plan, or run " +
+        "the Streamlit app with MODEL_API_KEY set to analyze any plan text with the real model.";
+    } else {
+      const v = validate(stub.response, plan, IDS);
+      S.run = { plan, hash, raw: stub.response, v, at: new Date(), lines: lineCount(plan), chars: pyLen(plan) };
+    }
+    renderSteps();
+    renderResults();
+    const target = $("#results");
+    if (target && S.run) target.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+
+  // ---------- results ----------
+  function regBox(check) {
+    return `<div class="box box--reg"><p class="eyebrow">Regulation &middot; <span class="cite">${esc(check.cfr_paragraph)}</span></p>
+      <p class="q">${esc(check.verbatim_text)}</p>
+      <div class="src">pinned index &middot; <a href="${esc(check.ecfr_url)}" target="_blank" rel="noopener">eCFR</a> &middot;
+      <span class="nw">retrieved ${esc(check.retrieval_date)}</span> &middot; sha256 ${esc(check.sha256.slice(0, 12))}&hellip;</div></div>`;
+  }
+
+  function cardHtml(check, card, lines, chars) {
+    if (!card) {
+      return `<article class="card card--invalid" data-check="${esc(check.check_id)}">
+        <div class="card-head"><span class="cid">${esc(check.check_id)}</span><span class="tag tag--invalid">No result</span></div>
+        <h3>${esc(check.question)}</h3><div class="pair">${regBox(check)}
+        <div class="box box--not_located">The model returned no result for this check, so it is unreviewed.</div></div>
+        <div class="card-foot card-foot--bad"><span>REVIEW INCOMPLETE &middot; rerun the analysis</span><span>${CARD_DISCLAIMER}</span></div></article>`;
+    }
+    const valid = card.errors.length === 0;
+    const known = card.status in STATUS;
+    const tagCls = valid && known ? card.status : "invalid";
+    const label = known ? STATUS[card.status] : "Invalid status";
+    let plan;
+    if ((card.status === "potential_conflict" || card.status === "evidence_found") && card.plan_span) {
+      plan = `<div class="box box--${card.status}"><p class="eyebrow">Plan says</p><p class="q">${esc(card.plan_span)}</p></div>`;
+    } else if (card.status === "not_located") {
+      plan = `<div class="box box--not_located"><p class="eyebrow">Plan</p>
+        <p><b>Not located in the supplied text (${lines} lines, ${chars.toLocaleString("en-US")} characters).</b></p>
+        <p style="margin-top:8px"><b>What to add:</b> ${esc(card.evidence_request)}</p></div>`;
+    } else if (card.status === "needs_information") {
+      plan = `<div class="box box--needs_information"><p class="eyebrow">Needs information</p><p>${esc(card.evidence_request)}</p></div>`;
+    } else {
+      plan = `<div class="box box--not_located"><p class="eyebrow">Plan</p><p>Returned status: <code>${esc(card.status)}</code></p></div>`;
+    }
+    const fails = card.errors.map((e) => `<div class="fail">Validation failure: ${esc(e)}</div>`).join("");
+    const foot = valid
+      ? `<div class="card-foot"><span>Source matched; interpretation requires review.</span><span>${CARD_DISCLAIMER}</span></div>`
+      : `<div class="card-foot card-foot--bad"><span>Validation failed &middot; do not rely on this card</span><span>${CARD_DISCLAIMER}</span></div>`;
+    return `<article class="card ${valid ? "" : "card--invalid"}" data-check="${esc(check.check_id)}">
+      <div class="card-head"><span class="cid">${esc(check.check_id)}</span><span class="tag tag--${tagCls}">${esc(label)}</span></div>
+      <h3>${esc(check.question)}</h3><div class="pair">${regBox(check)}${plan}</div>
+      <p class="interp"><b>Model interpretation.</b> ${esc(card.interpretation)}</p>${fails}${foot}</article>`;
+  }
+
+  function bannerHtml(kind, title, body, items = []) {
+    const ico = { incomplete: "!", open: "&bull;", clean: "&#10003;" }[kind];
+    const list = items.length ? `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>` : "";
+    return `<div class="banner banner--${kind}" role="status"><div class="ico">${ico}</div><div><h2>${esc(title)}</h2><p>${esc(body)}</p>${list}</div></div>`;
+  }
+
+  function summaryBanner(v) {
+    if (!v.all_valid) {
+      const items = v.global_errors.map((e) => `Accounting: ${e}`);
+      for (const c of v.cards) if (!IDS.includes(c.check_id)) for (const e of c.errors) items.push(`${c.check_id}: ${e}`);
+      const bad = v.cards.filter((c) => IDS.includes(c.check_id) && c.errors.length).length;
+      if (bad) items.push(`${bad} card(s) failed validation; see the flagged cards below.`);
+      return bannerHtml("incomplete", "REVIEW INCOMPLETE", "The response did not pass local validation. Rerun before relying on any result.", items);
+    }
+    const accounting = `${v.valid_count} of ${IDS.length} checks returned with valid evidence fields.`;
+    const open = Object.entries(OPEN)
+      .map(([status, label]) => [v.cards.filter((c) => c.status === status).length, label])
+      .filter(([n]) => n)
+      .map(([n, label]) => `${n} ${label}`);
+    if (open.length) return bannerHtml("open", "Review is not clean", `${accounting} Open items: ${open.join(", ")}. They are on the cards below.`);
+    return bannerHtml("clean", accounting, "Every check shows plan evidence. Interpretation still requires review by a qualified person.");
+  }
+
+  function renderResults() {
+    const box = $("#results");
+    if (!box) return;
+    if (S.error) {
+      box.innerHTML = `<div class="results">${bannerHtml("incomplete", "REVIEW INCOMPLETE", S.error)}</div>`;
+      return;
+    }
+    if (!S.run) {
+      box.innerHTML = S.stale
+        ? '<div class="stale" role="status">Plan text changed, so the previous results were cleared. Run the analysis again.</div>'
+        : "";
+      return;
+    }
+    const { v, raw, plan, hash, at, lines, chars } = S.run;
+    const byId = {};
+    for (const c of v.cards) {
+      if (!IDS.includes(c.check_id)) continue;
+      if (!(c.check_id in byId) || c.errors.length) byId[c.check_id] = c;
+    }
+    const counts = {};
+    for (const c of Object.values(byId)) counts[c.status] = (counts[c.status] || 0) + 1;
+    const tallyColors = { potential_conflict: "danger", evidence_found: "safe", needs_information: "caution", not_located: "neutral" };
+    const spans = Object.values(byId)
+      .filter((c) => !c.errors.length && c.plan_span && (c.status === "potential_conflict" || c.status === "evidence_found"))
+      .map((c) => [c.check_id, c.status, c.plan_span]);
+    const ts = at.toISOString().replace("T", " ").slice(0, 19) + " UTC";
+
+    box.innerHTML = `<div class="results">
+      ${summaryBanner(v)}
+      <div class="tally">${Object.entries(STATUS)
+        .map(([s, label]) => `<div><b style="color:var(--${tallyColors[s] === "caution" ? "ink" : tallyColors[s]})">${counts[s] || 0}</b>
+          <span class="tag tag--${s}">${label}</span></div>`).join("")}</div>
+      <div class="stamp"><span><b>plan</b> sha256:${hash.slice(0, 16)}&hellip;</span><span><b>index</b> checks.json v1</span>
+        <span><b>model</b> ${esc(MODEL_LABEL)}</span><span><b>schema</b> stub</span><span><b>at</b> ${ts}</span></div>
+      <div class="split">
+        <div class="cards">${CHECKS.map((c) => cardHtml(c, byId[c.check_id], lines, chars)).join("")}</div>
+        <aside class="planview"><p class="eyebrow">Plan text &middot; quoted evidence</p>
+          <pre>${highlightHtml(plan, spans)}</pre>
+          <div class="legend"><span><i style="background:var(--hl-danger);box-shadow:inset 0 -2px 0 var(--danger)"></i>Potential conflict</span>
+          <span><i style="background:var(--hl-safe);box-shadow:inset 0 -2px 0 var(--safe)"></i>Evidence found</span></div>
+          <details class="raw"><summary>Raw model response (JSON)</summary><pre>${esc(JSON.stringify(raw, null, 2))}</pre></details>
+        </aside>
+      </div></div>`;
+  }
+
+  function go(step) {
+    S.step = step;
+    renderSteps();
+    if (step === "plan") renderPlan();
+    else renderScenario();
+    window.scrollTo(0, 0);
+  }
+
+  $("#disclaimer").textContent = DISCLAIMER;
+  go("scenario");
+})();
+
+</script>

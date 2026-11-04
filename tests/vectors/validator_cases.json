@@ -1,0 +1,1956 @@
+[
+ {
+  "name": "plan_a_stub_valid",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": true,
+   "valid_count": 6,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "plan_b_stub_valid",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected prior to each use for wear, damage, and deterioration, and defective components will be removed from service.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "evidence_found",
+     "plan_span": "Harnesses and lanyards will be inspected prior to each use for wear, damage, and deterioration, and defective components will be removed from service.",
+     "interpretation": "The plan now matches the required cadence (prior to each use) and the required action on defective components (removal from service).",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text still does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan still points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": true,
+   "valid_count": 6,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "unknown_check_id",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_MADE_UP_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [
+    "Missing required check_id 'PFAS_RESCUE_01'."
+   ],
+   "cards": [
+    {
+     "check_id": "PFAS_MADE_UP_01",
+     "errors": [
+      "Unknown check_id 'PFAS_MADE_UP_01'."
+     ]
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "duplicate_check_id",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [
+    "Missing required check_id 'PFAS_INSPECT_01'."
+   ],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": [
+      "Duplicate check_id 'PFAS_RESCUE_01'."
+     ]
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "five_results",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [
+    "Expected 6 results, got 5.",
+    "Missing required check_id 'PFAS_CERT_01'."
+   ],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "seven_results",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    },
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 6,
+   "global_errors": [
+    "Expected 6 results, got 7."
+   ],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": [
+      "Duplicate check_id 'PFAS_RESCUE_01'."
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "name": "conflict_null_span",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": null,
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": [
+      "Status 'potential_conflict' requires plan_span of at least 20 characters."
+     ]
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "span_not_in_plan",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses will be inspected yearly by nobody at all.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": [
+      "plan_span does not occur in the plan text after normalization (possible fabricated quote)."
+     ]
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "span_too_short",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "inspected monthly",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": [
+      "Status 'potential_conflict' requires plan_span of at least 20 characters."
+     ]
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "not_located_null_request",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": [
+      "Status 'not_located' requires a non-empty evidence_request."
+     ]
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "needs_info_blank_request",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "   "
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": [
+      "Status 'needs_information' requires a non-empty evidence_request."
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "name": "empty_interpretation",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": [
+      "interpretation is empty."
+     ]
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "invented_status",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "compliant",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": [
+      "Status 'compliant' is not one of the four allowed values."
+     ]
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "linebreak_and_spaces_pass",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected\n   monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": true,
+   "valid_count": 6,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "curly_apostrophe_pass",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site's safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site’s safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": true,
+   "valid_count": 6,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "fullwidth_nfkc_pass",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected ｍｏｎｔｈｌｙ by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": true,
+   "valid_count": 6,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "trailing_period_and_case_pass",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "HARNESSES AND LANYARDS WILL BE INSPECTED MONTHLY BY THE SITE SAFETY COORDINATOR, AND DAMAGED EQUIPMENT WILL BE TAGGED OUT",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": true,
+   "valid_count": 6,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "irrelevant_real_span_passes",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "evidence_found",
+     "plan_span": "Training certification records are maintained by the HR office.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": true,
+   "valid_count": 6,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "non_string_span_rejected",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": 12345,
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [],
+   "cards": [
+    {
+     "check_id": "PFAS_RESCUE_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": [
+      "plan_span must be a string or null.",
+      "Status 'potential_conflict' requires plan_span of at least 20 characters."
+     ]
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "list_check_id_rejected",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    {
+     "check_id": [
+      "PFAS_RESCUE_01"
+     ],
+     "status": "evidence_found",
+     "plan_span": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.",
+     "interpretation": "The plan names who performs rescue, the trigger (a suspended worker after a fall), and the equipment used, and commits to immediate action.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [
+    "Missing required check_id 'PFAS_RESCUE_01'."
+   ],
+   "cards": [
+    {
+     "check_id": null,
+     "errors": [
+      "check_id must be a string or null.",
+      "Unknown check_id 'None'."
+     ]
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "result_not_an_object",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": [
+    "PFAS_RESCUE_01 looks fine",
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "status": "potential_conflict",
+     "plan_span": "Harnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.",
+     "interpretation": "The regulation requires inspection prior to each use. The plan commits only to a monthly cadence, which is weaker than the requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "status": "not_located",
+     "plan_span": null,
+     "interpretation": "The supplied text does not mention impact-loaded components or what happens to them after a fall event.",
+     "evidence_request": "Add a sentence stating that components subjected to impact loading are immediately removed from service until a competent person determines they are undamaged and suitable for reuse."
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "status": "evidence_found",
+     "plan_span": "Lanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.",
+     "interpretation": "The plan states both the 6-foot free fall limit and the 3.5-foot deceleration distance limit, matching the two-part requirement.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "status": "evidence_found",
+     "plan_span": "Every employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.",
+     "interpretation": "The plan commits to training every employee who might be exposed, covering both hazard recognition and minimization procedures.",
+     "evidence_request": null
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "status": "needs_information",
+     "plan_span": null,
+     "interpretation": "The plan points to an HR-held record rather than describing the record's contents, so the certification requirement cannot be confirmed from this text alone.",
+     "evidence_request": "Supply the HR training certification record, or confirm it contains each trained employee's name or identity, the training date(s), and the trainer's or employer's signature."
+    }
+   ]
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 5,
+   "global_errors": [
+    "Missing required check_id 'PFAS_RESCUE_01'."
+   ],
+   "cards": [
+    {
+     "check_id": null,
+     "errors": [
+      "Result is not an object.",
+      "Unknown check_id 'None'.",
+      "Status 'None' is not one of the four allowed values."
+     ]
+    },
+    {
+     "check_id": "PFAS_INSPECT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_IMPACT_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_FREEFALL_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_TRAIN_01",
+     "errors": []
+    },
+    {
+     "check_id": "PFAS_CERT_01",
+     "errors": []
+    }
+   ]
+  }
+ },
+ {
+  "name": "results_not_a_list",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "results": "six results, trust me"
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 0,
+   "global_errors": [
+    "Response has no 'results' array."
+   ],
+   "cards": []
+  }
+ },
+ {
+  "name": "no_results_key",
+  "plan_text": "If a worker is suspended after a fall, the foreman will begin rescue immediately using the aerial lift staged on each working level.\n\nHarnesses and lanyards will be inspected monthly by the site safety coordinator, and damaged equipment will be tagged out.\n\nLanyards will be rigged so that no employee can free fall more than 6 feet or contact any lower level, and deceleration distance will not exceed 3.5 feet.\n\nEvery employee who might be exposed to fall hazards will be trained by a competent person to recognize fall hazards and follow procedures to minimize them.\n\nTraining certification records are maintained by the HR office.",
+  "expected_ids": [
+   "PFAS_CERT_01",
+   "PFAS_FREEFALL_01",
+   "PFAS_IMPACT_01",
+   "PFAS_INSPECT_01",
+   "PFAS_RESCUE_01",
+   "PFAS_TRAIN_01"
+  ],
+  "response": {
+   "checks": []
+  },
+  "expected": {
+   "all_valid": false,
+   "valid_count": 0,
+   "global_errors": [
+    "Response has no 'results' array."
+   ],
+   "cards": []
+  }
+ }
+]

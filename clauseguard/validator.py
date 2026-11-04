@@ -62,11 +62,24 @@ def validate(response: dict, plan_text: str, expected_check_ids: set[str]) -> Va
 
     seen_ids: list[str] = []
     for raw in results:
-        check_id = raw.get("check_id") if isinstance(raw, dict) else None
-        status = raw.get("status") if isinstance(raw, dict) else None
-        plan_span = raw.get("plan_span") if isinstance(raw, dict) else None
-        interpretation = raw.get("interpretation") if isinstance(raw, dict) else None
-        evidence_request = raw.get("evidence_request") if isinstance(raw, dict) else None
+        # json_object fallback mode has no schema enforcement, so a field can
+        # arrive as any JSON type; non-strings are rejected, never len()'d or hashed.
+        type_errors: list[str] = []
+        if not isinstance(raw, dict):
+            type_errors.append("Result is not an object.")
+
+        def field(name):
+            value = raw.get(name) if isinstance(raw, dict) else None
+            if value is not None and not isinstance(value, str):
+                type_errors.append(f"{name} must be a string or null.")
+                return None
+            return value
+
+        check_id = field("check_id")
+        status = field("status")
+        plan_span = field("plan_span")
+        interpretation = field("interpretation")
+        evidence_request = field("evidence_request")
 
         card = CardValidation(
             check_id=check_id,
@@ -74,6 +87,7 @@ def validate(response: dict, plan_text: str, expected_check_ids: set[str]) -> Va
             plan_span=plan_span,
             interpretation=interpretation,
             evidence_request=evidence_request,
+            errors=type_errors,
         )
 
         if check_id in seen_ids:

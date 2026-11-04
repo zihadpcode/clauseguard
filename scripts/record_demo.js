@@ -48,9 +48,9 @@ const ROOT = require('path').resolve(__dirname, '..');
   await wait(5000);
 
   await caption('Step 1: confirm the scenario. Anything other than conventional personal fall arrest stops here.');
-  await page.getByText('Yes', { exact: true }).click();
+  await page.getByRole('button', { name: 'Yes, conventional PFAS' }).click();
   await wait(1500);
-  await page.getByRole('button', { name: 'Confirm and continue' }).click();
+  
   await wait(2000);
 
   await caption('Paste Plan A, as submitted. The extraction preview shows line and character counts.');
@@ -61,7 +61,7 @@ const ROOT = require('path').resolve(__dirname, '..');
   await wait(3000);
 
   await caption('Analyze: one structured call returns one result per check. The app then validates every result locally.');
-  await page.getByRole('button', { name: 'Analyze' }).click();
+  await page.getByRole('button', { name: 'Analyze plan' }).click();
   await wait(3500);
 
   await scrollToText('PFAS_INSPECT_01');
@@ -82,7 +82,7 @@ const ROOT = require('path').resolve(__dirname, '..');
   await wait(2000);
 
   await caption('Rerun.');
-  await page.getByRole('button', { name: 'Analyze' }).click();
+  await page.getByRole('button', { name: 'Analyze plan' }).click();
   await wait(3000);
 
   await scrollToText('PFAS_INSPECT_01');
@@ -102,7 +102,7 @@ const ROOT = require('path').resolve(__dirname, '..');
     main.scrollTo(0, 0);
   });
   await wait(600);
-  await scrollToText('Stamp:', 90);
+  await scrollToText('Review is not clean', 90);
   await caption('The banner says why this review is not clean. Why trust it: every quote is checked against the plan, every check is accounted for, and every result is stamped with plan hash, index version and model.');
   await wait(6500);
 

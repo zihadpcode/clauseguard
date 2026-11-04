@@ -1,9 +1,6 @@
-"""ClauseGuard: a precheck for one workflow -- conventional personal fall
-arrest system (PFAS) plans, checked against six questions drawn from
-29 CFR 1926.502 and 1926.503. See the proposal in the repo root for the
-full design. This file is the Streamlit UI; the actual decision logic
-lives in clauseguard/model_client.py (what the model is asked) and
-clauseguard/validator.py (what the application checks on its own)."""
+"""ClauseGuard Streamlit app: scenario gate -> plan text -> review.
+Decision logic lives in clauseguard/: model_client (what the model is
+asked), validator (what the app checks on its own), ui (escaped HTML)."""
 import datetime as dt
 import json
 import os
@@ -12,7 +9,22 @@ from pathlib import Path
 import streamlit as st
 import streamlit.components.v1 as components
 
-from clauseguard import model_client, validator
+from clauseguard import highlight, ingest, model_client, ui, validator
+
+DISCLAIMER = (
+    "Not legal advice, not a compliance determination, not a substitute "
+    "for a qualified safety professional."
+)
+MIN_PLAN_CHARS = 40
+INDEX_VERSION = "checks.json v1"
+ROOT = Path(__file__).resolve().parent
+DATA_DIR = ROOT / "data"
+LOG_PATH = Path(os.environ.get("CLAUSEGUARD_LOG_PATH", ROOT / "logs" / "runs.jsonl"))
+OPEN_STATUS_LABELS = {
+    "potential_conflict": "potential conflict",
+    "not_located": "not located",
+    "needs_information": "needs information",
+}
 
 # st.text_area only commits on blur/Ctrl+Enter, so server-side clearing alone
 # would leave stale results visible while the user types. This hides them on
@@ -21,8 +33,15 @@ _CLEAR_ON_KEYSTROKE_JS = """
 <script>
 const doc = window.parent.document;
 const w = window.parent;
-const hide = () => doc.querySelectorAll('.st-key-results').forEach(e => e.style.display = 'none');
+const hide = () => {
+  doc.querySelectorAll('.st-key-results').forEach(e => e.style.display = 'none');
+  const note = doc.getElementById('cg-stale');
+  if (note) note.style.display = '';
+};
 doc.querySelectorAll('.st-key-results').forEach(e => e.style.display = '');
+// React reuses the note's DOM node across reruns, so undo a previous show.
+const staleNote = doc.getElementById('cg-stale');
+if (staleNote && staleNote.dataset.startHidden === '1') staleNote.style.display = 'none';
 const ta = doc.querySelector('.st-key-plan_text_area textarea');
 if (ta) {
   if (w.__cgTa && w.__cgHide) w.__cgTa.removeEventListener('input', w.__cgHide);
@@ -34,22 +53,7 @@ if (ta) {
 <!-- %s -->
 """
 
-DISCLAIMER = (
-    "Not legal advice, not a compliance determination, not a substitute "
-    "for a qualified safety professional."
-)
-MIN_PLAN_CHARS = 40
-OPEN_STATUS_LABELS = {
-    "potential_conflict": "potential conflict",
-    "not_located": "not located",
-    "needs_information": "needs information",
-}
-INDEX_VERSION = "checks.json v1"
-ROOT = Path(__file__).resolve().parent
-DATA_DIR = ROOT / "data"
-LOG_PATH = Path(os.environ.get("CLAUSEGUARD_LOG_PATH", ROOT / "logs" / "runs.jsonl"))
-
-st.set_page_config(page_title="ClauseGuard", layout="wide")
+st.set_page_config(page_title="ClauseGuard", page_icon="\U0001F6E1", layout="wide")
 
 
 def _init_state():
@@ -57,12 +61,18 @@ def _init_state():
         "scenario_confirmed": None,  # None | True | False
         "plan_text": "",
         "plan_text_area": "",
+        "text_source": "pasted",
+        "last_upload_id": None,
+        "upload_error": None,
         "last_analyzed_hash": None,
         "model_result": None,
         "validation_result": None,
         "analyzed_at": None,
+        "analyzed_text": "",
         "analyzed_line_count": 0,
         "analyzed_char_count": 0,
+        "results_were_cleared": False,
+        "analysis_error": None,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
@@ -70,156 +80,170 @@ def _init_state():
 
 
 def _clear_results():
+    if st.session_state.model_result is not None:
+        st.session_state.results_were_cleared = True
     st.session_state.last_analyzed_hash = None
     st.session_state.model_result = None
     st.session_state.validation_result = None
     st.session_state.analyzed_at = None
+    st.session_state.analysis_error = None
 
 
-def _status_badge(status: str) -> str:
-    return {
-        "potential_conflict": "\U0001F534 Potential conflict",
-        "evidence_found": "\U0001F7E2 Evidence found",
-        "needs_information": "\U0001F7E1 Needs information",
-        "not_located": "⚪ Not located",
-    }.get(status, status)
-
-
-def _render_scenario_gate():
-    st.title("ClauseGuard")
-    st.caption(
-        "A precheck for one workflow: conventional personal fall arrest "
-        "systems (PFAS) on a construction site."
-    )
-    st.subheader("Step 1: Confirm the scenario")
-    st.write(
-        "This tool supports exactly one scenario: the work described uses "
-        "**conventional personal fall arrest systems (PFAS)** -- a body "
-        "harness, lanyard, and anchorage. Guardrails, safety nets, covers, "
-        "roofing alternatives, and the conditional § 1926.502(k) fall "
-        "protection plan are not supported."
-    )
-    choice = st.radio(
-        "Does the plan you are submitting use conventional PFAS?",
-        options=["Not answered yet", "Yes", "No"],
-        index=0,
-    )
-    if choice == "Yes":
-        if st.button("Confirm and continue", type="primary"):
-            st.session_state.scenario_confirmed = True
-            st.rerun()
-    elif choice == "No":
-        st.error(
-            "This scenario is not supported. ClauseGuard only reviews "
-            "conventional PFAS plans against the six checks in this "
-            "build -- it has no applicability logic for guardrails, nets, "
-            "covers, roofing alternatives, or a § 1926.502(k) fall "
-            "protection plan."
-        )
-    st.divider()
-    st.caption(DISCLAIMER)
-
-
-def _load_demo(path: Path):
-    with open(path, encoding="utf-8") as f:
-        text = f.read().strip()
+def _set_plan_text(text: str, source: str):
     st.session_state.plan_text = text
     st.session_state.plan_text_area = text
+    st.session_state.text_source = source
     _clear_results()
 
 
-def _render_input_step(checks):
-    st.title("ClauseGuard")
-    st.caption(
-        "Scenario confirmed: conventional PFAS. Reviewing against six "
-        "checks drawn from § 1926.502 and § 1926.503."
-    )
+def _load_demo(filename: str, source: str):
+    _set_plan_text((DATA_DIR / filename).read_text(encoding="utf-8").strip(), source)
 
-    col_a, col_b, col_c = st.columns([1, 1, 4])
-    with col_a:
-        if st.button("Load Plan A (as submitted)"):
-            _load_demo(DATA_DIR / "plan_a.txt")
+
+def _html(markup: str):
+    st.html(markup)
+
+
+def _render_chrome(step: int):
+    _html(ui.CSS)
+    live = bool(os.environ.get("MODEL_API_KEY"))
+    _html(ui.brand_bar(live, os.environ.get("MODEL_ID", model_client.MODEL_ID)))
+    _html(ui.stepper(step))
+
+
+def _render_scenario_gate():
+    _render_chrome(1)
+    _html(ui.scenario_panel())
+    if st.session_state.scenario_confirmed is False:
+        _html(ui.unsupported_panel())
+        if st.button("Back to scenario question"):
+            st.session_state.scenario_confirmed = None
             st.rerun()
-    with col_b:
-        if st.button("Load Plan B (corrected)"):
-            _load_demo(DATA_DIR / "plan_b.txt")
-            st.rerun()
-    with col_c:
-        if st.button("Change scenario"):
+    else:
+        c1, c2, _ = st.columns([1.3, 1.3, 2])
+        with c1:
+            if st.button("Yes, conventional PFAS", type="primary", width="stretch"):
+                st.session_state.scenario_confirmed = True
+                st.rerun()
+        with c2:
+            if st.button("No, a different system", width="stretch"):
+                st.session_state.scenario_confirmed = False
+                st.rerun()
+    _html(ui.footer(DISCLAIMER))
+
+
+def _apply_upload():
+    upload = st.session_state.get("upload")
+    if upload is None or upload.file_id == st.session_state.last_upload_id:
+        return
+    st.session_state.last_upload_id = upload.file_id
+    try:
+        extracted = ingest.extract(upload.name, upload.getvalue())
+    except ingest.IngestError as e:
+        st.session_state.upload_error = str(e)
+        return
+    st.session_state.upload_error = None
+    _set_plan_text(extracted.text.strip(), extracted.source)
+
+
+def _render_plan_step(checks):
+    _apply_upload()
+    # Widget state is already updated at the start of the run. Clear in place
+    # rather than st.rerun(): a rerun would discard an Analyze click that
+    # arrived in the same run as the committed edit.
+    if st.session_state.plan_text_area != st.session_state.plan_text:
+        st.session_state.plan_text = st.session_state.plan_text_area
+        st.session_state.text_source = "pasted / edited"
+        _clear_results()
+
+    _render_chrome(3 if st.session_state.model_result is not None else 2)
+
+    left, right = st.columns([3, 2], gap="medium")
+    with left:
+        plan_text = st.text_area(
+            "Fall protection plan text",
+            height=300,
+            key="plan_text_area",
+            placeholder="Paste the PFAS section of the site-specific safety plan here.",
+        )
+
+        st.file_uploader(
+            "Or upload a .txt file or a digitally generated .pdf",
+            type=["txt", "pdf"],
+            key="upload",
+        )
+        if st.session_state.upload_error:
+            st.error(st.session_state.upload_error)
+
+        st.caption("Development examples (not validation data):")
+        d1, d2 = st.columns(2)
+        with d1:
+            st.button("Load Plan A (as submitted)", width="stretch", on_click=_load_demo, args=("plan_a.txt", "demo: Plan A"))
+        with d2:
+            st.button("Load Plan B (corrected)", width="stretch", on_click=_load_demo, args=("plan_b.txt", "demo: Plan B"))
+
+    stripped = plan_text.strip()
+    chars = len(stripped)
+    lines = len(stripped.splitlines()) if stripped else 0
+    ready = chars >= MIN_PLAN_CHARS
+    with right:
+        _html(ui.preview_panel(
+            lines, chars, st.session_state.text_source,
+            model_client.hash_plan(stripped) if stripped else None, ready, MIN_PLAN_CHARS,
+        ))
+        analyze = st.button("Analyze plan", type="primary", disabled=not ready, width="stretch")
+        if st.button("Change scenario", width="stretch"):
             st.session_state.scenario_confirmed = None
             st.rerun()
 
-    plan_text = st.text_area(
-        "Paste the PFAS fall protection plan text",
-        height=240,
-        key="plan_text_area",
-    )
-
-    # Clear in place rather than st.rerun(): a rerun here would discard an
-    # Analyze click that arrived in the same run as the committed edit.
-    if plan_text != st.session_state.plan_text:
-        st.session_state.plan_text = plan_text
-        _clear_results()
-
-    stripped = plan_text.strip()
-    char_count = len(stripped)
-    line_count = len(stripped.splitlines()) if stripped else 0
-    st.caption(f"Extraction preview: {line_count} lines, {char_count} characters.")
-
-    if char_count < MIN_PLAN_CHARS:
-        st.warning(
-            f"INCOMPLETE: paste at least {MIN_PLAN_CHARS} characters of plan "
-            "text before analyzing."
-        )
-        analyze_disabled = True
-    else:
-        analyze_disabled = False
-
-    analyze_clicked = st.button(
-        "Analyze", type="primary", disabled=analyze_disabled
-    )
-
-    if analyze_clicked:
+    if analyze:
         _run_analysis(stripped, checks)
 
+    if st.session_state.analysis_error:
+        _html(ui.banner("incomplete", "REVIEW INCOMPLETE", st.session_state.analysis_error))
+
     if st.session_state.model_result is not None:
+        _html(ui.stale_note(hidden=True))
         with st.container(key="results"):
             _render_results(checks)
+    elif st.session_state.results_were_cleared:
+        _html(ui.stale_note(hidden=False))
 
     components.html(
         _CLEAR_ON_KEYSTROKE_JS % (st.session_state.last_analyzed_hash or "none"),
         height=0,
     )
-
-    st.divider()
-    st.caption(DISCLAIMER)
+    _html(ui.footer(DISCLAIMER))
 
 
 def _run_analysis(plan_text: str, checks):
+    st.session_state.results_were_cleared = False
+    st.session_state.analysis_error = None
     with st.spinner("Running the six checks..."):
         try:
             result = model_client.call_model(plan_text, checks)
         except model_client.ModelUnavailableError as e:
-            st.error(str(e))
+            st.session_state.analysis_error = str(e)
             return
         except json.JSONDecodeError:
-            st.error("REVIEW INCOMPLETE: the model response did not parse as JSON.")
+            st.session_state.analysis_error = "The model response did not parse as JSON."
             return
-        except Exception as e:  # pragma: no cover - live API failure path
-            st.error(f"Model call failed: {e}")
+        except Exception as e:  # live API failure surfaces, never silently retried
+            st.session_state.analysis_error = f"Model call failed: {e}"
             return
 
     expected_ids = {c["check_id"] for c in checks}
     try:
         v = validator.validate(result.raw_response, plan_text, expected_ids)
-    except Exception as e:  # malformed response that isn't even a dict
-        st.error(f"Response could not be validated: {e}")
+    except Exception as e:
+        st.session_state.analysis_error = f"Response could not be validated: {e}"
         return
 
     st.session_state.model_result = result
     st.session_state.validation_result = v
     st.session_state.last_analyzed_hash = model_client.hash_plan(plan_text)
     st.session_state.analyzed_at = dt.datetime.now(dt.timezone.utc)
+    st.session_state.analyzed_text = plan_text
     st.session_state.analyzed_line_count = len(plan_text.splitlines())
     st.session_state.analyzed_char_count = len(plan_text)
     _log_run(plan_text, result, v)
@@ -243,91 +267,81 @@ def _log_run(plan_text, result, v):
         f.write(json.dumps(entry) + "\n")
 
 
+def _summary_banner(v, checks) -> str:
+    known = {c["check_id"] for c in checks}
+    if not v.all_valid:
+        items = [f"Accounting: {e}" for e in v.global_errors]
+        items += [f"{c.check_id}: {e}" for c in v.cards if c.check_id not in known for e in c.errors]
+        bad_cards = sum(1 for c in v.cards if c.check_id in known and not c.valid)
+        if bad_cards:
+            items.append(f"{bad_cards} card(s) failed validation; see the red cards below.")
+        return ui.banner(
+            "incomplete", "REVIEW INCOMPLETE",
+            "The response did not pass local validation. Rerun before relying on any result.", items,
+        )
+    accounting = f"{v.valid_count} of {len(checks)} checks returned with valid evidence fields."
+    open_items = [
+        f"{n} {label}"
+        for status, label in OPEN_STATUS_LABELS.items()
+        if (n := sum(1 for c in v.cards if c.status == status))
+    ]
+    if open_items:
+        return ui.banner(
+            "open", "Review is not clean",
+            f"{accounting} Open items: {', '.join(open_items)}. They are on the cards below.",
+        )
+    return ui.banner(
+        "clean", accounting,
+        "Every check shows plan evidence. Interpretation still requires review by a qualified person.",
+    )
+
+
 def _render_results(checks):
     result = st.session_state.model_result
     v = st.session_state.validation_result
-    checks_by_id = {c["check_id"]: c for c in checks}
+    known = {c["check_id"]: c for c in checks}
+    cards_by_id = {}
+    for c in v.cards:
+        if c.check_id in known:
+            cards_by_id.setdefault(c.check_id, c)
+            if not c.valid:
+                cards_by_id[c.check_id] = c
 
-    st.markdown(
-        f"**Stamp:** plan hash `{st.session_state.last_analyzed_hash[:16]}...` "
-        f"| index `{INDEX_VERSION}` | model `{result.model_id}` | "
-        f"schema `{result.schema_mode}` | "
-        f"{st.session_state.analyzed_at.strftime('%Y-%m-%d %H:%M:%S UTC')}"
-    )
+    _html(_summary_banner(v, checks))
+    counts = {}
+    for c in cards_by_id.values():
+        counts[c.status] = counts.get(c.status, 0) + 1
+    _html(ui.tally(counts))
+    _html(ui.stamp(
+        st.session_state.last_analyzed_hash, INDEX_VERSION, result.model_id, result.schema_mode,
+        st.session_state.analyzed_at.strftime("%Y-%m-%d %H:%M:%S UTC"),
+    ))
 
-    if v.all_valid:
-        accounting = f"{v.valid_count} of {len(checks)} checks returned with valid evidence fields."
-        open_items = [
-            (n, label)
-            for status, label in OPEN_STATUS_LABELS.items()
-            if (n := sum(1 for c in v.cards if c.status == status))
+    cards_col, plan_col = st.columns([3, 2], gap="medium")
+    with cards_col:
+        for check in checks:
+            _html(ui.check_card(
+                check, cards_by_id.get(check["check_id"]),
+                st.session_state.analyzed_line_count, st.session_state.analyzed_char_count,
+            ))
+    with plan_col, st.container(key="planview"):
+        spans = [
+            (c.check_id, c.status, c.plan_span)
+            for c in cards_by_id.values()
+            if c.valid and c.plan_span and c.status in ("potential_conflict", "evidence_found")
         ]
-        if open_items:
-            summary = ", ".join(f"{n} {label}" for n, label in open_items)
-            st.warning(f"{accounting} Review is not clean: {summary}. Open items are on the cards below.")
-        else:
-            st.success(
-                f"{accounting} All six checks show plan evidence. "
-                "Interpretation still requires review."
-            )
-    else:
-        st.error("REVIEW INCOMPLETE")
-        for err in v.global_errors:
-            st.error(f"Accounting failure: {err}")
-
-    cards_by_id = {c.check_id: c for c in v.cards if c.check_id in checks_by_id}
-
-    for check in checks:
-        card = cards_by_id.get(check["check_id"])
-        with st.container(border=True):
-            st.markdown(f"#### {check['check_id']} — {check['question']}")
-            reg_col, plan_col = st.columns(2)
-            with reg_col:
-                st.markdown(f"**Regulation ({check['cfr_paragraph']}):**")
-                st.markdown(f"> {check['verbatim_text']}")
-                st.caption(
-                    f"[Source]({check['ecfr_url']}) · retrieved "
-                    f"{check['retrieval_date']} · sha256 "
-                    f"{check['sha256'][:12]}..."
-                )
-            with plan_col:
-                if card is None:
-                    st.error(
-                        "No result was returned for this check. "
-                        "REVIEW INCOMPLETE."
-                    )
-                    continue
-                st.markdown(f"**Status:** {_status_badge(card.status)}")
-                if card.plan_span:
-                    st.markdown("**Quoted from plan:**")
-                    st.markdown(f"> {card.plan_span}")
-                if card.status == "not_located":
-                    n = st.session_state.analyzed_line_count
-                    m = st.session_state.analyzed_char_count
-                    st.markdown(f"*Not located in the supplied text ({n} lines, {m} characters).*")
-                    if card.evidence_request:
-                        st.markdown(f"**What to add:** {card.evidence_request}")
-                elif card.status == "needs_information" and card.evidence_request:
-                    st.markdown(f"**Needs information:** {card.evidence_request}")
-                if card.interpretation:
-                    st.markdown(f"**Interpretation:** {card.interpretation}")
-                st.caption("Source matched; interpretation requires review.")
-
-            if not card.valid:
-                for err in card.errors:
-                    st.error(f"Validation failure on this card: {err}")
+        _html(ui.plan_view(highlight.highlight_html(st.session_state.analyzed_text, spans)))
+        with st.expander("Raw model response (JSON)"):
+            st.json(result.raw_response)
 
 
 def main():
     _init_state()
     checks = model_client.load_checks()
-
     if not st.session_state.scenario_confirmed:
         _render_scenario_gate()
         return
+    _render_plan_step(checks)
 
-    _render_input_step(checks)
 
-
-if __name__ == "__main__":
-    main()
+main()
