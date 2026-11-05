@@ -1,0 +1,17 @@
+[
+ ["intro", "Fall protection has been OSHA's most cited standard for fifteen years straight. And so many of those problems are sitting right there, on paper... before anyone ever climbs. This is ClauseGuard."],
+ ["user", "Picture a subcontractor's safety coordinator. They've written a personal fall arrest plan, and it has to go to the general contractor. ClauseGuard checks it against six OSHA requirements, before it ever leaves their desk."],
+ ["gate", "First, we confirm the scenario. ClauseGuard only covers conventional personal fall arrest systems. If that's not your situation, it stops, instead of guessing."],
+ ["paste", "Now we paste the plan. The extraction preview shows exactly what the system is going to read. The lines, the characters, and a fingerprint of the text."],
+ ["analyze", "One click. Muse Spark reads the plan, and returns a status for each of the six checks, quoting the exact sentence it relied on. Then the app double checks every answer, right here, locally. Every quote has to really exist in the plan. And all six checks have to come back."],
+ ["conflict", "And here's the catch. The plan says harnesses get inspected monthly. The regulation says, prior to each use. That's a real conflict, and you can see both sides, right next to each other. And the regulation text comes from a pinned, fingerprinted copy. The model never gets to write it."],
+ ["fix", "So, let's fix it. The moment I start typing, the old results disappear. You will never see a stale review sitting next to edited text."],
+ ["rerun", "Now, run it again."],
+ ["flip", "There it is! Inspection flips to evidence found, and it quotes the corrected sentence."],
+ ["impact", "But we're not done yet. Impact loading is not located in the supplied text. Listen to that wording. Not missing. Not noncompliant. Just... not in what you gave us."],
+ ["cert", "And the training certification? The plan says HR keeps those records. ClauseGuard doesn't assume that record exists. It asks for it."],
+ ["banner", "That's why the banner says this review is not clean. It refuses to pretend otherwise. And every result is stamped with the plan's fingerprint, the index version, and the model."],
+ ["json", "Nothing is hidden. The raw response is right here, for anyone who wants to check the work."],
+ ["limits", "Now, honestly, the limits. Six checks. One scenario. No expert review. And in this recording, the model call is stubbed with recorded responses, because we didn't have live API access. It's labeled, right on the screen."],
+ ["outro", "ClauseGuard doesn't certify compliance. It finds the questions a reviewer should be asking... before anyone is up on the steel. Thanks for watching."]
+]

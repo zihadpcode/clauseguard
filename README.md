@@ -11,7 +11,7 @@ Built for the **Meta Global AI Developer Hackathon** (Startup track, *Build for 
 | | |
 |---|---|
 | **Hosted demo** | https://claude.ai/artifact/12qtv92jfMzXbv48vBNJiM (stub mode; the owner must share it before others can open it) |
-| **Demo video** | [`docs/demo.mp4`](docs/demo.mp4): 78 s recording of a real run, with on-screen captions and no voiceover |
+| **Demo video** | [`docs/demo.mp4`](docs/demo.mp4): 2 min 49 s recording of a real run in stub mode, with captions and a narrator voice synthesized locally by Kokoro (open weights TTS, Apache 2.0). Script: `docs/narration.json`; build: `scripts/narrate_demo.py` and `scripts/record_narrated.js` |
 | **Full app** | `streamlit run app.py` (live model when `MODEL_API_KEY` is set) |
 
 ## Status of this build
