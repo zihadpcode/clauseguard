@@ -20,7 +20,7 @@ Built for the **Meta Global AI Developer Hackathon** (Startup track, *Build for 
 |---|---|
 | Streamlit app, validator, ingestion, UI | Working. Verified by 65 pytest tests, 23 JavaScript parity tests and 16 browser checks. |
 | Hosted demo | Deployed as a static page. It uses the same index, stub data and a JavaScript validator held byte-for-byte to the Python one. |
-| Live Meta Model API call | **Implemented but never executed.** No API key was available, and `api.meta.ai` was unreachable from the build sandbox. The app runs in **stub mode** without a key. |
+| Live Meta Model API call | **Run.** 9 live calls to `muse-spark-1.3` (Plans A, B and an injection plan, three runs each): strict `json_schema` accepted every time, all 9 responses valid, every status stable across runs and as expected, and the injected instruction was not followed. See EVAL.md §7.2. Without a key, the app runs in **stub mode**; the hosted page and demo video use stub mode. |
 | Regulatory text | Typed from knowledge of the regulation, because eCFR was blocked from the sandbox, then compared against the official OSHA copies of §1926.502 and §1926.503 on 2026-11-04: one comma in (d)(21) was corrected and the rest matched. Not yet read against eCFR by a human. |
 
 The full disclosure is in [EVAL.md](EVAL.md).
@@ -105,7 +105,7 @@ Every component of [the proposal](docs/PROPOSAL.md), mapped to the code that imp
 | §2 Never render an incomplete review as clean | `app._summary_banner` | `test_open_items_never_render_as_a_clean_review` |
 | §10 Fabricated quote, trivially short quote, coverage gap | validator rules 2 and 4 | vectors `span_not_in_plan`, `span_too_short`, `five_results`, `duplicate_check_id` |
 | §10 Meta API unavailable | Stub mode refuses unknown text instead of inventing an analysis | `test_unrecognized_text_in_stub_mode_refuses_instead_of_fabricating`, web e2e |
-| §7.2, §7.3 Model examples, three-run stability, injection | `scripts/run_model_eval.py`, `data/plan_injection.txt` | **Not run** (no API key); see EVAL.md |
+| §7.2, §7.3 Model examples, three-run stability, injection | `scripts/run_model_eval.py`, `data/plan_injection.txt` | **Run live**: 9 calls, all valid and stable; see EVAL.md and `logs/eval_runs.jsonl` |
 | §8 Demo plans, recorded run, raw JSON log | `data/plan_a.txt`, `data/plan_b.txt`, `docs/demo.mp4`, `logs/runs.jsonl` | Recorded from the real app |
 
 ## Run it
@@ -200,5 +200,5 @@ docs/                           proposal, demo video, screenshots
 - Six checks and one scenario. Nothing else in Subpart M, no other subparts, no other jurisdictions.
 - No expert review and no accuracy claim. Plans A and B are development examples, not validation data.
 - A plausible but wrong interpretation can pass validation. That is why every card says *interpretation requires review*.
-- Prompt-injection resistance is untested against the live model. The structural limits hold regardless of the model: fixed IDs, pinned regulation, and quotes checked against the plan.
+- Prompt-injection resistance was tested live with one embedded instruction over three runs, and the model ignored it. That is evidence, not a guarantee. The structural limits hold regardless of the model: fixed IDs, pinned regulation, and quotes checked against the plan.
 - The hosted page is stub-only and takes `.txt` uploads, not PDF. PDF extraction runs in the Streamlit app.
