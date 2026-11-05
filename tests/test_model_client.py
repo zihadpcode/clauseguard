@@ -18,7 +18,7 @@ PLAN_A_RESPONSE = STUB[model_client.hash_plan(PLAN_A)]["response"]
 class FakeServer:
     """reject: set of (response_format type, has_temperature) combos that 400."""
 
-    def __init__(self, reject=(), status_for_all=None):
+    def __init__(self, reject=(), status_for_all=None, delay=0):
         self.requests = []
         outer = self
 
@@ -29,6 +29,9 @@ class FakeServer:
             def do_POST(self):
                 body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
                 outer.requests.append(body)
+                if delay:
+                    import time
+                    time.sleep(delay)
                 combo = (body["response_format"]["type"], "temperature" in body)
                 if status_for_all:
                     return self._send(status_for_all, {"error": {"message": "nope"}})
@@ -113,3 +116,32 @@ def test_contributor_models_are_refused(live_env, monkeypatch):
     monkeypatch.setenv("MODEL_ID", "muse-spark-1.3-contributor")
     with pytest.raises(model_client.ModelUnavailableError):
         model_client.call_model(PLAN_A)
+
+
+def test_slow_model_times_out_with_a_clear_error_instead_of_hanging(live_env, monkeypatch):
+    import time
+
+    server = live_env(delay=3)
+    monkeypatch.setenv("MODEL_TIMEOUT_SECONDS", "1")
+    start = time.monotonic()
+    with pytest.raises(model_client.ModelUnavailableError, match="did not answer within 1 seconds"):
+        model_client.call_model(PLAN_A)
+    assert time.monotonic() - start < 2.5
+    assert len(server.requests) == 1  # no silent retry
+
+
+def test_server_error_is_not_silently_retried(live_env):
+    import openai
+
+    server = live_env(status_for_all=500)
+    with pytest.raises(openai.InternalServerError):
+        model_client.call_model(PLAN_A)
+    assert len(server.requests) == 1
+
+
+def test_timeout_setting_falls_back_on_bad_values(monkeypatch):
+    for bad in ("abc", "0", "-5"):
+        monkeypatch.setenv("MODEL_TIMEOUT_SECONDS", bad)
+        assert model_client.timeout_seconds() == model_client.DEFAULT_TIMEOUT_SECONDS
+    monkeypatch.setenv("MODEL_TIMEOUT_SECONDS", "90")
+    assert model_client.timeout_seconds() == 90

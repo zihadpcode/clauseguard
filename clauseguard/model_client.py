@@ -204,12 +204,30 @@ def _call_stub(plan_text: str) -> ModelCallResult:
     )
 
 
-def _call_live(plan_text: str, checks: list[dict], api_key: str) -> ModelCallResult:
-    from openai import BadRequestError, OpenAI
+DEFAULT_TIMEOUT_SECONDS = 180.0
 
+
+def timeout_seconds() -> float:
+    """Per-request time limit for the live call (env MODEL_TIMEOUT_SECONDS)."""
+    try:
+        value = float(os.environ.get("MODEL_TIMEOUT_SECONDS", DEFAULT_TIMEOUT_SECONDS))
+    except ValueError:
+        return DEFAULT_TIMEOUT_SECONDS
+    return value if value > 0 else DEFAULT_TIMEOUT_SECONDS
+
+
+def _call_live(plan_text: str, checks: list[dict], api_key: str) -> ModelCallResult:
+    from openai import APITimeoutError, BadRequestError, OpenAI
+
+    limit = timeout_seconds()
+    # The SDK's defaults (10 minute timeout, 2 silent retries) could freeze
+    # the app for half an hour on one dropped response. Bound every request
+    # and never retry silently: failures surface to the user as they are.
     client = OpenAI(
         api_key=api_key,
         base_url=os.environ.get("MODEL_BASE_URL", META_MODEL_API_BASE_URL),
+        timeout=limit,
+        max_retries=0,
     )
     model_id = os.environ.get("MODEL_ID", MODEL_ID)
     if model_id.endswith("-contributor"):
@@ -242,6 +260,11 @@ def _call_live(plan_text: str, checks: list[dict], api_key: str) -> ModelCallRes
             break
         except BadRequestError as e:
             last_error = e
+        except APITimeoutError:
+            raise ModelUnavailableError(
+                f"{model_id} did not answer within {limit:.0f} seconds, so no result is shown. "
+                "Run Analyze again; set MODEL_TIMEOUT_SECONDS to change the limit."
+            ) from None
     else:
         raise last_error
 

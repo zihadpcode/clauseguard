@@ -124,7 +124,7 @@ Confirm the scenario, then click **Load Plan A** (or upload a `.txt`/`.pdf`) and
 
 | `MODEL_API_KEY` | Behavior |
 |---|---|
-| set | Live call to `muse-spark-1.3` at `https://api.meta.ai/v1` via the OpenAI Python SDK. `MODEL_BASE_URL` and `MODEL_ID` can point at a partner-hosted Meta model (disclose it if you do). Model IDs ending in `-contributor` are refused. |
+| set | Live call to `muse-spark-1.3` at `https://api.meta.ai/v1` via the OpenAI Python SDK. `MODEL_BASE_URL` and `MODEL_ID` can point at a partner-hosted Meta model (disclose it if you do). Model IDs ending in `-contributor` are refused. Each request is limited to `MODEL_TIMEOUT_SECONDS` (default 180) and is never retried silently, so a slow or dropped response shows an error instead of freezing the app. |
 | unset | **Stub mode.** Returns hand-written recorded JSON for Plans A and B only, and refuses any other text. The masthead and stamp both say so. |
 
 ### Deploy to Streamlit Community Cloud

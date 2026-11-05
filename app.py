@@ -219,7 +219,13 @@ def _render_plan_step(checks):
 def _run_analysis(plan_text: str, checks):
     st.session_state.results_were_cleared = False
     st.session_state.analysis_error = None
-    with st.spinner("Running the six checks..."):
+    spinner_text = "Running the six checks..."
+    if os.environ.get("MODEL_API_KEY"):
+        spinner_text = (
+            "Muse Spark is reasoning through the six checks. This usually takes under a minute; "
+            f"it stops after {model_client.timeout_seconds():.0f} seconds."
+        )
+    with st.spinner(spinner_text):
         try:
             result = model_client.call_model(plan_text, checks)
         except model_client.ModelUnavailableError as e:
