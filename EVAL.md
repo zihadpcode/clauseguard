@@ -125,4 +125,4 @@ These were found by driving the real interfaces in a headless browser and by rev
 ## Raw logs
 
 - `logs/runs.jsonl`: the two analysis runs from the recorded demo session (Plan A, then the edited plan, which equals Plan B). Both are stub mode, and the log records that.
-- `logs/eval_runs.jsonl`: the 9 raw live responses from `muse-spark-1.3` (2026-11-05 UTC), with schema mode, validation result and timestamp for each.
+- `logs/eval_runs.jsonl`: 10 raw live responses from `muse-spark-1.3` (2026-11-05 UTC), with schema mode, validation result and timestamp for each. The first line is a Plan A call from an earlier attempt that was stopped after one call; it was also valid and is not counted in the tables above.
