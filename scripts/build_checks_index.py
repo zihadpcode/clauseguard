@@ -9,6 +9,14 @@ regulation, not copied from a live fetch during this build. It has NOT been
 re-verified against eCFR by a human as section 4.4 of the proposal requires.
 Do this before relying on it: open each URL below and diff the quoted text
 against the current eCFR section by eye.
+
+UPDATE 2026-11-04: every excerpt was compared, fragment by fragment, against
+the official OSHA copies (osha.gov/laws-regs/regulations/standardnumber/1926/
+1926.502 and 1926.503); eCFR itself refused automated fetches. All six
+matched except (d)(21), which read "damage, and" where the official text has
+"damage and"; that comma was removed. PFAS_CERT_01 is an excerpt: it omits
+the last sentence of (b)(1) on training done by another employer. The flag
+below stays False because no human has yet read the excerpts against eCFR.
 """
 import hashlib
 import json
@@ -38,7 +46,7 @@ CHECKS = [
         "kind": "conduct",
         "verbatim_text": (
             "Personal fall arrest systems shall be inspected prior to each use "
-            "for wear, damage, and other deterioration, and defective "
+            "for wear, damage and other deterioration, and defective "
             "components shall be removed from service."
         ),
     },

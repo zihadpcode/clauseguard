@@ -17,9 +17,9 @@
       "cfr_paragraph": "29 CFR 1926.502(d)(21)",
       "ecfr_url": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1926/subpart-M/section-1926.502",
       "kind": "conduct",
-      "verbatim_text": "Personal fall arrest systems shall be inspected prior to each use for wear, damage, and other deterioration, and defective components shall be removed from service.",
+      "verbatim_text": "Personal fall arrest systems shall be inspected prior to each use for wear, damage and other deterioration, and defective components shall be removed from service.",
       "retrieval_date": "2026-11-04",
-      "sha256": "4bc87ec5b3ae598a9cd6958ab1e73fecd0b7bad34c1b9d2e07a112958b8e966e",
+      "sha256": "8d2c19982ace21c3dee87b0ba86a17e0ac9eadd3c1af7c5ed044617cb02d71fe",
       "verified_against_live_ecfr_by_human": false
     },
     {

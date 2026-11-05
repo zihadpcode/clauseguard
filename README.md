@@ -21,7 +21,7 @@ Built for the **Meta Global AI Developer Hackathon** (Startup track, *Build for 
 | Streamlit app, validator, ingestion, UI | Working. Verified by 65 pytest tests, 23 JavaScript parity tests and 16 browser checks. |
 | Hosted demo | Deployed as a static page. It uses the same index, stub data and a JavaScript validator held byte-for-byte to the Python one. |
 | Live Meta Model API call | **Implemented but never executed.** No API key was available, and `api.meta.ai` was unreachable from the build sandbox. The app runs in **stub mode** without a key. |
-| Regulatory text | Typed from knowledge of the regulation, because eCFR was blocked from the sandbox. **Compare each entry against eCFR before relying on it.** |
+| Regulatory text | Typed from knowledge of the regulation, because eCFR was blocked from the sandbox, then compared against the official OSHA copies of §1926.502 and §1926.503 on 2026-11-04: one comma in (d)(21) was corrected and the rest matched. Not yet read against eCFR by a human. |
 
 The full disclosure is in [EVAL.md](EVAL.md).
 
